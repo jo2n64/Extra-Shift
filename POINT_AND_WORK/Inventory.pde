@@ -39,7 +39,7 @@ class Inventory {
     for (int i = 0; i < heldItems; i++) {
       if(heldItems >=1){
       ItemButton item = items.get(i);
-      item.displayOnInv(200+i*150, y + 25);
+      item.displayOnInv(190+i*150, y + 25);
       }
     }
   }

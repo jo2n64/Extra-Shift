@@ -13,7 +13,7 @@ class ImageButton {
       button = loadImage(path);
       if (path == "/IMAGES/leftArrow.png" || path == "/IMAGES/rightArrow.png" || path == "/IMAGES/upArrow.png" || path == "/IMAGES/downArrow.png") button.resize(100, 100);
     }
-    image(button, x, y);
+      image(button, x, y);
   }
 
   boolean pointInRec(float px, float py) {

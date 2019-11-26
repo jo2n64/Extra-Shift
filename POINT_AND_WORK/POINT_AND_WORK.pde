@@ -6,12 +6,11 @@ Inventory inv;
 float recX, recY;
 
 void setup() {
-  size(1280, 720);
-  scene = 1;
+  size(1280, 720, P2D);
+  scene = 0;
   recX = width/2 - 150;
   recY = height/2 - 100;
   inv = new Inventory(7);
-
   doorOpen = new SoundFile(this, "/sounds/Door Sound.mp3");
   fallBookcase = new SoundFile(this, "/sounds/Bookcase Falls.wav");
   pickItem = new SoundFile(this, "/sounds/Inventory Pick up sound.mp3");
@@ -65,7 +64,7 @@ void mousePressed() {
 }
 
 void loadScenes() {
-  println(putCatnip);
+  
   switch(scene) {
   case 0: 
     intro();
@@ -112,19 +111,12 @@ void intro() {
 }
 
 void end() {
-  String endText = "YOU RUINED YOUR BOSS'S LIFE, BUT YOU HAVENT";
-  if (!usedLaxatives) endText += "\n" + laxativesMissing;
-  if (!putCatnip) endText+= "\n" + catnipMissing;
-  String retry = "Play again?";
-  background(0);
-  fill(255, 0, 0);
-  rect(recX, recY, 300, 150);
-  fill(255);
-  textAlign(CENTER);
-  textSize(32);
-  text(endText, width/2, height/2 - 200);
-  textSize(24);
-  text(retry, width/2, height/2);
+  PImage endScreen, puffEyes, scratched, shat, green;
+  endScreen = loadImage("/IMAGES/zavalionew/room_endscene_without pictures.png");
+  image(endScreen, 0, 0);
+  if (usedLaxatives){ shat = loadImage("/IMAGES/zavalionew/bosslose_lax.png"); image(shat, 0, 0);}
+  if (putCatnip) {scratched = loadImage("/IMAGES/zavalionew/bosslose_catnip.png"); image(scratched, 0, 0);}
+  if (changedDrops) {puffEyes = loadImage("/IMAGES/zavalionew/bosslose_eyedrops.png"); image(puffEyes, 0, 0);}
 }
 
 void reset() {
@@ -157,4 +149,5 @@ void reset() {
   catnipInInv = false;
   putCatnip = false;
   blownUp = false;
+  explosionPlayed = false;
 }

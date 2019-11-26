@@ -1,6 +1,6 @@
-PImage oven, gas[], match;
+PImage oven, gas[], match, fwImage, fwLit;
 Rectangle knobsRec, drawerRec, screwdriverRec, ovenRec, coffeeRec;
-boolean drawerOpen, knobsOn, pickedScrew = false, fwPlaced = false, matchesPlaced = false, usedLaxatives = false;
+boolean drawerOpen, knobsOn = false, pickedScrew = false, fwPlaced = false, matchesPlaced = false, usedLaxatives = false;
 String ovenText, coffeeText, laxativesMissing = "- put the laxatives in the coffee machine";
 
 //oven buttons
@@ -8,11 +8,16 @@ ImageButton knobs, drawer, backOvenButton;
 ItemButton screwdriver;
 
 void ovenSetup() {
-  knobs = new ImageButton(207, height/2 + 6, "/IMAGES/knobson.png");
-  drawer = new ImageButton(600, height/2 + 30, "/IMAGES/draw_open.png");
+  if (knobsOn)
+    knobs = new ImageButton(222, height/2 + 32, "/IMAGES/knobson.png");
+  if (drawerOpen)
+    drawer = new ImageButton(650, height/2 + 70, "/IMAGES/draw_open.png");
   backOvenButton = new ImageButton(width/2, height - 200, "/IMAGES/downArrow.png");
-  screwdriver = new ItemButton("Screwdriver", width/2 + 75, height/2 + 25, "/IMAGES/screwdriver2.png", 8, 7, screwdriverRec, "Premium tool, I can do a lot with this.");
-  oven = loadImage("/IMAGES/newcloseup_kitchen.png");
+  screwdriver = new ItemButton("Screwdriver", 700, height/2 + 100, "/IMAGES/screwdriver2.png", 8, 7, screwdriverRec, "Premium tool, I can do a lot with this.");
+  oven = loadImage("/IMAGES/zavalio.png");
+  if (fwPlaced) oven = loadImage("/IMAGES/fireworks_onstove.png");
+  if (matchesPlaced && fwPlaced)oven = loadImage("/IMAGES/fireoworks_onstove_lit.png");
+
   match = loadImage("/IMAGES/matches.png");
   gas = new PImage[3];
   gas[0] = loadImage("/IMAGES/smoke_stove.png");
@@ -20,8 +25,8 @@ void ovenSetup() {
   gas[2] = loadImage("/IMAGES/smoke_stove3.png");
   knobsRec = new Rectangle(205, height/2, 425, 50);
   ovenRec = new Rectangle(250, 190, 360, 400);
-  drawerRec = new Rectangle(610, 400, 350, 100);
-  screwdriverRec = new Rectangle(width/2 + 60, height/2 + 60, 220, 30);
+  drawerRec = new Rectangle(650, height/2 + 70, 350, 100);
+  screwdriverRec = new Rectangle(700, height/2 + 100, 220, 30);
   coffeeRec = new Rectangle(width/2 + 130, 60, 170, 250);
   ovenText = "A stove with the gas turned on. I don't think this is enough explosive power. I need more!";
   coffeeText = "A coffee machine. F***ing Nespresso.";
@@ -53,17 +58,13 @@ void oven() {
       showDescription(screwdriverRec.x, screwdriverRec.y, screwdriverRec.w, screwdriverRec.h, screwdriver.description);
     }
   }
-  if (fwPlaced) fireworks.displayOnInv(width/2 - 250, height/2 - 150);
-  if (!matchesInInventory && matchesPlaced) {
-    match.resize(match.width / 4, match.height / 4);
-    image(match, width/2 - 260, height/2-150);
-  }
+
   inv.displayItems();
   for (int i = 0; i < inv.heldItems; i++) {
     ItemButton item = inv.items.get(i);
-    showDescription(180 * i + 130, height - 100, 130, 90, item.description);
+    showDescription(180 * i + 150, height - 100, 130, 90, item.description);
     if (item.held) {
-      item.displayOnInv(mouseX, mouseY);
+      item.displayOnInv(mouseX - 50, mouseY - 50);
     }
   }
 }
@@ -101,7 +102,7 @@ void ovenClicks() {
     }
   }
   for (int i = 0; i < inv.heldItems; i++) {
-    if (pointInRect(mouseX, mouseY, 180 * i + 130, height - 100, 130, 80)) inv.items.get(i).held = true;
+    if (pointInRect(mouseX, mouseY, 180 * i + 150, height - 100, 130, 80)) inv.items.get(i).held = true;
     else inv.items.get(i).held = false;
   }
 }

@@ -41,9 +41,9 @@ void hall() {
   inv.displayItems();
   for (int i = 0; i < inv.heldItems; i++) {
     ItemButton item = inv.items.get(i);
-    showDescription(180 * i + 130, height - 100, 130, 80, item.description);
+    showDescription(180 * i + 150, height - 100, 130, 80, item.description);
     if (item.held) {
-      item.displayOnInv(mouseX, mouseY);
+      item.displayOnInv(mouseX - 50, mouseY - 50);
     }
   }
   //println(fireworks.button);
@@ -73,7 +73,7 @@ void hallClicks() {
   if (closet.pointInRec(mouseX, mouseY)) openedCloset = true;
   
   for (int i = 0; i < inv.heldItems; i++) {
-    if (pointInRect(mouseX, mouseY, 180 * i + 130, height - 100, 130, 80)) inv.items.get(i).held = true;
+    if (pointInRect(mouseX, mouseY, 180 * i + 150, height - 100, 130, 80)) inv.items.get(i).held = true;
     else inv.items.get(i).held = false;
   }
 }

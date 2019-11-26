@@ -12,16 +12,13 @@ void showDescription(float x, float y, float wid, float hei, String description)
   }
 }
 
-void showAction(String description){
-  float timer = millis();
-  float end = 3000;
-  while(timer <= end + timer){
-    text(description, 10, height-50);
-  }
-}
 
 void showText(String text){
+  float timer = millis();
+  float last = 2000;
+  if(millis() <= timer + last){
   textAlign(CORNER);
   text(text, 200, height-120);
   textAlign(CENTER);
+  }
 }
